@@ -1,41 +1,63 @@
-f = open("second.txt", "r")
-input = []
-inputori = []
-s = f.readline()
-i = 0
-counter = 0
-opcode = 0
-verb = 0
-noun = 0
+def read_commastxt(line):
+    inputs = []
+    for number in line.split(','):
+        inputs.append(int(number))
+    return inputs
 
-for i in s.split(','):
-    i = int(i)
-    inputori.append(i)
 
-input = inputori.copy()
+def print_solution(first, second):
+    print("First: " + str(first) + ", Second " + str(second))
 
-while input[0] != 19690720:
 
-    input = inputori.copy()
-    opcode = 0
-    counter = 0
-    input[1] = noun
-    input[2] = verb
+# First Exercise
+def execute_intcode(inputs):
+    counter = opcode = 0
 
-    while opcode is not 99:
-        opcode = input[counter]
+    while not(opcode == 99):
+        opcode = inputs[counter]
+        first_param = inputs[counter + 1]
+        second_param = inputs[counter + 2]
 
         if opcode is 1:
-            input[input[counter+3]] = input[input[counter+1]] + input[input[counter+2]]
+            inputs[inputs[counter + 3]] = inputs[first_param] + inputs[second_param]
 
         if opcode is 2:
-            input[input[counter+3]] = input[input[counter+1]] * input[input[counter+2]]
+            inputs[inputs[counter + 3]] = inputs[first_param] * inputs[second_param]
         counter += 4
+    return inputs[0]
 
-    noun += 1
-    if noun is 100:
-        noun = 0
+
+# Second Exercise
+def change_noun_verb(noun, verb):
+    if verb > 99:
+        noun += 1
+        return noun, 0
+    else:
         verb += 1
+        return noun, verb
 
-print(str(noun) + " " + str(verb))
 
+def reiterate_intcode(inputs_stock):
+    output = noun = verb = 0
+    inputs = []
+
+    while not(output == 19690720):
+        inputs = inputs_stock.copy()
+        noun, verb = change_noun_verb(noun, verb)
+
+        inputs[1] = noun
+        inputs[2] = verb
+        output = execute_intcode(inputs)
+    return noun, verb
+
+
+f = open("second.txt", "r")
+line = f.readline()
+inputs_stock = read_commastxt(line)
+inputs = inputs_stock.copy()
+first = execute_intcode(inputs)
+
+inputs_stock[1] = inputs_stock[2] = 0
+noun, verb = reiterate_intcode(inputs_stock)
+second = 100*noun + verb
+print_solution(inputs[0], second)
