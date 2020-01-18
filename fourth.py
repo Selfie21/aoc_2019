@@ -1,3 +1,6 @@
+def print_solution(first, second):
+    print("First: " + str(first) + ", Second " + str(second))
+
 # Exercise 1
 def find_dupes(num1):
     value = False
@@ -24,8 +27,6 @@ count = 0
 for i in range(165432, 707912):
     if find_dupes(i) and find_down(i):
         count += 1
-print(count)
-
 
 # Exercise 2
 c = 0
@@ -49,4 +50,5 @@ for i in range(165432, 707912 + 1):
     if not (inc and (doub == 1)):
         continue
     c += 1
-print(c)
+
+print_solution(count, c)
