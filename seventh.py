@@ -43,7 +43,7 @@ def check_doubles(current):
 
 f = open("seventh.txt", "r")
 inputs_original = read_commastxt(f.readline())
-computer = Intcomputer(0)
+computer = Intcomputer(0, 0)
 
 
 # First Exercise
