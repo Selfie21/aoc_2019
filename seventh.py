@@ -73,7 +73,7 @@ parameters = []
 
 for i in range(5):
     tapes.append(inputs_original.copy())
-    parameters.append([tunings[i], tunings[i], Intcomputer(0)])
+    parameters.append([tunings[i], tunings[i], Intcomputer()])
 parameters[0][1] = 0
 
 

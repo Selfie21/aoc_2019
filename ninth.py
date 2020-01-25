@@ -1,5 +1,6 @@
 from fifth import Intcomputer
 
+
 def read_commastxt(line):
     inputs = []
     for number in line.split(','):
@@ -19,5 +20,11 @@ def enlarge_list(offset, list):
 f = open("ninth.txt", "r")
 inputs_original = read_commastxt(f.readline())
 enlarge_list(10000, inputs_original)
-computer = Intcomputer(0, 0)
-computer.execute_intcode(inputs_original, 1, 1)
+inputs_2 = inputs_original.copy()
+computer1 = Intcomputer()
+computer2 = Intcomputer()
+
+first = computer1.execute_intcode(inputs_original.copy(), 1, 1)
+second = computer2.execute_intcode(inputs_2, 2, 2)
+print_solution(first, second)
+
