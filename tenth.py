@@ -24,43 +24,33 @@ class Map:
             return True
 
     def check_asteroid(self, inputs):
+        maximum = 0
         for x in range(len(inputs)):
             for y in range(len(inputs[0])):
                 if inputs[x][y] == '#':
-                    print(x, y, self.check_straight(inputs, x, y))
+                    test = self.check_angles(inputs, x, y)
+                    if test[0] > maximum:
+                        maximum = test[0]
+                        print(test)
 
-    def check_straight(self, inputs, x, y):
-        bounds = [y+1, y-1, x+1, x-1]               #right, left, down, up
 
-        while self.check_bound(x, bounds[0]) and inputs[x][bounds[0]] != '#':
-            bounds[0] += 1
-            if not(self.check_bound(x, bounds[0])):
-                bounds[0] = -1
-                break
+    def check_angles(self, inputs, x, y):
+        angles = []
+        points = []
 
-        while self.check_bound(x, bounds[1]) and inputs[x][bounds[1]] != '#':
-            bounds[1] -= 1
-            if not(self.check_bound(x, bounds[1])):
-                bounds[1] = -1
-                break
-
-        while self.check_bound(bounds[2], y) and inputs[bounds[2]][y] != '#':
-            bounds[2] += 1
-            if not(self.check_bound(bounds[2], y)):
-                bounds[2] = -1
-                break
-
-        while self.check_bound(bounds[3], y) and inputs[bounds[3]][y] != '#':
-            bounds[3] -= 1
-            if not(self.check_bound(bounds[3], y)):
-                bounds[2] = -1
-                break
-
-        return bounds
-
-    def check_angles(self, inputs, bounds, x, y):
-        pass
-
+        for x_new in range(len(inputs)):
+            for y_new in range(len(inputs[0])):
+                if inputs[x_new][y_new] == '#' and x_new-x != 0:
+                    angle = (y_new-y)/(x_new-x) if x_new-x != 0 else 180
+                    if angle not in angles:
+                        angles.append(angle)
+                        distance = (x_new - x) + (y_new - y)
+                        points.append((x_new, y_new, distance))
+                    else:
+                        distance = (x_new - x) + (y_new - y)
+                        if distance < points[angles.index(angle)][2]:
+                            points[angles.index(angle)] = (x_new, y_new, distance)
+        return len(angles), x, y
 
 
 
