@@ -24,10 +24,49 @@ class Map:
             return True
 
     def check_asteroid(self, inputs):
-        for coordinate in inputs:
-            if coordinate == '#':
+        for x in range(len(inputs)):
+            for y in range(len(inputs[0])):
+                if inputs[x][y] == '#':
+                    print(x, y, self.check_straight(inputs, x, y))
+
+    def check_straight(self, inputs, x, y):
+        bounds = [y+1, y-1, x+1, x-1]               #right, left, down, up
+
+        while self.check_bound(x, bounds[0]) and inputs[x][bounds[0]] != '#':
+            bounds[0] += 1
+            if not(self.check_bound(x, bounds[0])):
+                bounds[0] = -1
+                break
+
+        while self.check_bound(x, bounds[1]) and inputs[x][bounds[1]] != '#':
+            bounds[1] -= 1
+            if not(self.check_bound(x, bounds[1])):
+                bounds[1] = -1
+                break
+
+        while self.check_bound(bounds[2], y) and inputs[bounds[2]][y] != '#':
+            bounds[2] += 1
+            if not(self.check_bound(bounds[2], y)):
+                bounds[2] = -1
+                break
+
+        while self.check_bound(bounds[3], y) and inputs[bounds[3]][y] != '#':
+            bounds[3] -= 1
+            if not(self.check_bound(bounds[3], y)):
+                bounds[2] = -1
+                break
+
+        return bounds
+
+    def check_angles(self, inputs, bounds, x, y):
+        pass
+
+
+
+
 
 
 
 inputs = read_map(open("tenth.txt", "r"))
-map = Map(len(inputs[0]), len(inputs))
+map = Map(len(inputs[0])-1, len(inputs)-1)
+map.check_asteroid(inputs)
