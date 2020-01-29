@@ -23,7 +23,7 @@ def convert_pixels(image):
     new_image = ''
     for _ in range(len(image)):
         if image[_] == '0':
-            new_image += '_'
+            new_image += ' '
         elif image[_] == '1':
             new_image += '#'
         elif image[_] == '2':
