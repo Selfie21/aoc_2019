@@ -1,8 +1,39 @@
 class Robot:
 
     def __init__(self):
-        self.robotcanvas = [[0]*100] * 100  # 0 = black, 1 = white
-        self.position = 50, 50
+        self.canvas = [[-1 for x in range(100)] for y in range(100)]
+        self.canvas[50][50] = 0
+        self.angle = 0
+        self.positionx = 50
+        self.positiony = 50
+        self.counter = 0
+
+    def get_colour(self):
+        return self.canvas[self.positiony][self.positionx]
+
+    def set_colour(self, colour):
+        if self.canvas[self.positiony][self.positionx] == -1:
+            self.counter += 1
+        self.canvas[self.positiony][self.positionx] = colour
+
+    def set_position(self, direction):
+        angles_movement = {
+            0: (-1, 0),
+            90: (0, 1),
+            180: (1, 0),
+            270: (0, -1)
+        }
+        self.set_angle(direction)
+        self.positiony += angles_movement[self.angle][0]
+        self.positionx += angles_movement[self.angle][1]
+
+    # 0 = left, 1 = right
+    def set_angle(self, direction):
+        if direction == 0:
+            self.angle -= 90
+        elif direction == 1:
+            self.angle += 90
+        self.angle = self.angle % 360
 
 
 class Intcomputer:
@@ -29,8 +60,9 @@ class Intcomputer:
                 params[i] = self.relative_base + inputs[self.counter + i + 1]
         return params
 
-    def execute_intcode(self, inputs, previous_output):
+    def execute_intcode(self, inputs):
         opcode = 0
+        first_output = True
 
         while not(opcode == 99):
             opcode, modes = self.get_setting(inputs)
@@ -44,12 +76,17 @@ class Intcomputer:
                 self.counter += 4
 
             elif opcode == 3:
-                inputs[params[0]] = previous_output
+                inputs[params[0]] = self.robot.get_colour()
                 self.counter += 2
 
             elif opcode == 4:
+                if first_output:
+                    self.robot.set_colour(inputs[params[0]])
+                    first_output = False
+                else:
+                    self.robot.set_position(inputs[params[0]])
+                    first_output = True
                 self.counter += 2
-                return inputs[params[0]]
 
             elif opcode == 5:
                 self.counter = inputs[params[1]] if inputs[params[0]] != 0 else self.counter + 3
@@ -69,4 +106,4 @@ class Intcomputer:
                 self.relative_base += inputs[params[0]]
                 self.counter += 2
 
-        return None
+        return self.robot.counter
