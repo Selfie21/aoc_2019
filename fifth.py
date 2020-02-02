@@ -9,11 +9,19 @@ def print_solution(first, second):
     print("First: " + str(first) + ", Second " + str(second))
 
 
+class Robot:
+
+    def __init__(self):
+        self.robotcanvas = [[0]*100] * 100  # 0 = black, 1 = white
+        self.position = 50, 50
+
+
 class Intcomputer:
 
     def __init__(self):
         self.counter = 0
         self.relative_base = 0
+        self.robot = Robot()
 
     def get_setting(self, inputs):
         modes = ''
@@ -32,9 +40,8 @@ class Intcomputer:
                 params[i] = self.relative_base + inputs[self.counter + i + 1]
         return params
 
-    def execute_intcode(self, inputs, enviroment, previous_output):
+    def execute_intcode(self, inputs, previous_output):
         opcode = 0
-        firstInput = True
 
         while not(opcode == 99):
             opcode, modes = self.get_setting(inputs)
@@ -48,8 +55,7 @@ class Intcomputer:
                 self.counter += 4
 
             elif opcode == 3:
-                inputs[params[0]] = enviroment if firstInput else previous_output
-                firstInput = False
+                inputs[params[0]] = previous_output
                 self.counter += 2
 
             elif opcode == 4:
