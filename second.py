@@ -1,12 +1,4 @@
-def read_commastxt(line):
-    inputs = []
-    for number in line.split(','):
-        inputs.append(int(number))
-    return inputs
-
-
-def print_solution(first, second):
-    print("First: " + str(first) + ", Second " + str(second))
+from utility import Utility
 
 
 # First Exercise
@@ -53,11 +45,11 @@ def reiterate_intcode(inputs_stock):
 
 f = open("second.txt", "r")
 line = f.readline()
-inputs_stock = read_commastxt(line)
+inputs_stock = Utility.read_commastxt(line)
 inputs = inputs_stock.copy()
 first = execute_intcode(inputs)
 
 inputs_stock[1] = inputs_stock[2] = 0
 noun, verb = reiterate_intcode(inputs_stock)
 second = 100*noun + verb
-print_solution(inputs[0], second)
+Utility.print_solution(inputs[0], second)

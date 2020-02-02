@@ -1,14 +1,5 @@
 from fifth import Intcomputer
-
-def read_commastxt(line):
-    inputs = []
-    for number in line.split(','):
-        inputs.append(int(number))
-    return inputs
-
-
-def print_solution(first, second):
-    print("First: " + str(first) + ", Second " + str(second))
+from utility import Utility
 
 
 def test_amplifier(param, computer, inputs, previous):
@@ -42,7 +33,7 @@ def check_doubles(current):
 
 
 f = open("seventh.txt", "r")
-inputs_original = read_commastxt(f.readline())
+inputs_original = Utility.read_commastxt(f.readline())
 computer = Intcomputer(0, 0)
 
 
@@ -90,4 +81,4 @@ while last_halt:
             last_halt = False
 
 
-print_solution(maximum, second)
+Utility.print_solution(maximum, second)

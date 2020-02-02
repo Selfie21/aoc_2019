@@ -1,10 +1,16 @@
-from utility import Utility
+class Robot:
+
+    def __init__(self):
+        self.robotcanvas = [[0]*100] * 100  # 0 = black, 1 = white
+        self.position = 50, 50
+
 
 class Intcomputer:
 
     def __init__(self):
         self.counter = 0
         self.relative_base = 0
+        self.robot = Robot()
 
     def get_setting(self, inputs):
         modes = ''
@@ -64,7 +70,3 @@ class Intcomputer:
                 self.counter += 2
 
         return None
-
-
-f = open("fifth.txt", "r")
-inputs = Utility.read_commastxt(f.readline())

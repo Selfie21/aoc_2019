@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from utility import Utility
 
 board = []
 f = open('tenth.txt', 'r')
@@ -7,10 +8,6 @@ for line in f:
 
 p1 = 0
 p2 = 0
-
-
-def print_solution(first, second):
-    print("First: " + str(first) + ", Second " + str(second))
 
 
 def dist(a1, a2):
@@ -107,4 +104,4 @@ while destroyed < 200:
 
 second = p2
 
-print_solution(first, second)
+Utility.print_solution(first, second)

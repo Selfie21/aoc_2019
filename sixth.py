@@ -1,17 +1,10 @@
 import networkx as nx
-
-
-def read_linestxt(file):
-    return file.read().splitlines()
-
-
-def print_solution(first, second):
-    print("First: " + str(first) + ", Second " + str(second))
+from utility import Utility
 
 
 def create_graph(file):
     g = nx.Graph()
-    for line in read_linestxt(file):
+    for line in Utility.read_linestxt(file):
         u = line.split(')')[0]
         v = line.split(')')[1]
         g.add_node(u)
@@ -29,4 +22,4 @@ for node in graph.nodes:
 
 second = nx.shortest_path_length(graph, "YOU", "SAN") - 2
 
-print_solution(first, second)
+Utility.print_solution(first, second)

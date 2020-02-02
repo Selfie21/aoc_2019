@@ -1,5 +1,4 @@
-def print_solution(first, second):
-    print("First: " + str(first) + ", Second " + str(second))
+from utility import Utility
 
 # Exercise 1
 def find_dupes(num1):
@@ -51,4 +50,4 @@ for i in range(165432, 707912 + 1):
         continue
     c += 1
 
-print_solution(count, c)
+Utility.print_solution(count, c)

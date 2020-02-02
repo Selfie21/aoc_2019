@@ -1,5 +1,4 @@
-def print_solution(first, second):
-    print("First: " + str(first) + ", Second " + str(second))
+from utility import Utility
 
 
 def find_minimumchars(layers, charac):
@@ -59,7 +58,7 @@ for pixel in range(len(layers[0])):
     final_image += get_final_pixel(layers, pixel)
 final_image = convert_pixels(final_image)
 
-print_solution(first, ':')
+Utility.print_solution(first, ':')
 while counter < height:
     print(final_image[row:row+width])
     row += width

@@ -1,13 +1,8 @@
-def read_commastxt(line):
-    inputs = []
-    for stri in line.split(','):
-        inputs.append(stri)
-    return inputs
-
+from utility import Utility
 
 f = open("third.txt", "r")
-A = read_commastxt(f.readline())
-B = read_commastxt(f.readline())
+A = Utility.read_commastxt(f.readline())
+B = Utility.read_commastxt(f.readline())
 
 DX = {'L': -1, 'R': 1, 'U': 0, 'D': 0}
 DY = {'L': 0, 'R': 0, 'U': 1, 'D': -1}
@@ -36,4 +31,4 @@ PB = get_points(B)
 both = set(PA.keys()) & set(PB.keys())
 part1 = min([abs(x) + abs(y) for (x, y) in both])
 part2 = min([PA[p] + PB[p] for p in both])
-print(part1, part2)
+Utility.print_solution(int(part1, part2))
