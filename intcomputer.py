@@ -1,19 +1,18 @@
 class Robot:
 
     def __init__(self):
-        self.canvas = [[-1 for x in range(100)] for y in range(100)]
-        self.canvas[50][50] = 0
+        self.canvas = [[0 for x in range(100)] for y in range(100)]
+        self.canvas[50][50] = 1
         self.angle = 0
         self.positionx = 50
         self.positiony = 50
-        self.counter = 0
+        self.counter = {(0, 0)}
 
     def get_colour(self):
         return self.canvas[self.positiony][self.positionx]
 
     def set_colour(self, colour):
-        if self.canvas[self.positiony][self.positionx] == -1:
-            self.counter += 1
+        self.counter.add((self.positiony, self.positionx))
         self.canvas[self.positiony][self.positionx] = colour
 
     def set_position(self, direction):
@@ -106,4 +105,4 @@ class Intcomputer:
                 self.relative_base += inputs[params[0]]
                 self.counter += 2
 
-        return self.robot.counter
+        return self.robot.counter, self.robot.canvas
