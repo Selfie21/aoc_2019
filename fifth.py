@@ -64,7 +64,3 @@ class Intcomputer:
                 self.counter += 2
 
         return None
-
-
-f = open("fifth.txt", "r")
-inputs = Utility.read_commastxt(f.readline())

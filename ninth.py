@@ -14,7 +14,7 @@ inputs_2 = inputs_original.copy()
 computer1 = Intcomputer()
 computer2 = Intcomputer()
 
-first = computer1.execute_intcode(inputs_original.copy(), 1, 1)
-second = computer2.execute_intcode(inputs_2, 2, 2)
+first = computer1.execute_intcode(inputs_original.copy(), 1)
+second = computer2.execute_intcode(inputs_2, 2)
 Utility.print_solution(first, second)
 
