@@ -12,8 +12,9 @@ def count_twodim(new_list, item):
 f = open("thirteenth.txt", "r")
 inputs_original = Utility.read_commastxt(f.readline())
 Utility.enlarge_list(10000, inputs_original)
+inputs_original[0] = 2
 computer = Intcomputer()
 
-gameboard = computer.execute_intcode(inputs_original.copy())
+gameboard = computer.execute_intcode(inputs_original)
 first = count_twodim(gameboard, 2)
 print(first)

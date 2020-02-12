@@ -1,10 +1,12 @@
 class Arcade:
+
     def __init__(self):
-        self.canvas = [[0 for x in range(100)] for y in range(100)]
+        self.canvas = [[0 for x in range(40)] for y in range(40)]
         self.counter = 1
         self.positionx = 0
         self.positiony = 0
-        self.counter_blocks = 0
+        self.ballpositionx = 0
+        self.paddlepositionx = 0
 
     def get_tile(self):
         return self.canvas[self.positiony][self.positionx]
@@ -15,8 +17,11 @@ class Arcade:
         elif self.counter == 2:
             self.positiony = tileparam
         elif self.counter == 3:
-            self.check_blocks(tileparam)
-            self.counter = 0
+            if self.positionx == -1 and self.positiony == 0:
+                print(tileparam)
+            else:
+                self.check_blocks(tileparam)
+                self.counter = 0
         self.counter += 1
 
     def check_blocks(self, new_tiletype):
@@ -24,7 +29,20 @@ class Arcade:
         if old_tiletype == 0:
             self.canvas[self.positiony][self.positionx] = new_tiletype
         elif (old_tiletype == 2) and (new_tiletype == 4):
-            self.canvas[self.positiony][self.positionx] = new_tiletype
+            self.canvas[self.positiony][self.positionx] = 0
+        # if ball or paddle is being updated
+        if new_tiletype == 4:
+            self.ballpositionx = self.positionx
+        if new_tiletype == 3:
+            self.paddlepositionx = self.positionx
+
+    def update_joystick(self):
+        if self.ballpositionx < self.paddlepositionx:
+            return -1
+        elif self.ballpositionx > self.paddlepositionx:
+            return 1
+        else:
+            return 0
 
 
 class Intcomputer:
@@ -53,7 +71,6 @@ class Intcomputer:
 
     def execute_intcode(self, inputs):
         opcode = 0
-        first_output = True
 
         while not(opcode == 99):
             opcode, modes = self.get_setting(inputs)
@@ -67,7 +84,7 @@ class Intcomputer:
                 self.counter += 4
 
             elif opcode == 3:
-                inputs[params[0]] = self.arcade.get_tile()
+                inputs[params[0]] = self.arcade.update_joystick()
                 self.counter += 2
 
             elif opcode == 4:
