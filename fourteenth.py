@@ -23,6 +23,13 @@ class Formula:
     def get_compounds(self):
         return self.compounds
 
+    def get_compuounds_factor(self, factor):
+        dummy_compounds = []
+        for compound in self.compounds:
+            compound.quantity *= factor
+            dummy_compounds.append(compound)
+        return dummy_compounds
+
     def add_compound(self, element):
         self.compounds.append(element)
 
@@ -35,10 +42,10 @@ class Chemist:
         return Element(name, int(quanitity))
 
     @staticmethod
-    def get_compounds(formulas, wanted_result):
+    def get_compounds(formulas, wanted_result, wanted_result_amount):
         for formula in formulas:
             if formula.get_result().name == wanted_result:
-                return formula.get_compounds()
+                return formula.get_compuounds_factor(wanted_result_amount)
 
     @staticmethod
     def removes_element(elements, name):
@@ -64,17 +71,13 @@ for line in Utility.read_linestxt(f):
 
     formulas.append(formula)
 
-queue = Chemist.get_compounds(formulas, "FUEL")
+queue = Chemist.get_compounds(formulas, "FUEL", 1)
 amount = 0
 
 while queue:
     iron_ore = Chemist.removes_element(queue, 'ORE')
     amount += iron_ore.quantity
 
-
-    new_compounds = Chemist.get_compounds(formulas, queue[0].name)
+    new_compounds = Chemist.get_compounds(formulas, queue[0].name, queue[0].quantity)
     queue.pop(0)
     queue = queue + new_compounds
-    print(amount)
-
-print(amount)
